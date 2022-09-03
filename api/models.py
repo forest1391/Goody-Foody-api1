@@ -250,6 +250,7 @@ class Restaurant(models.Model):
         db_table = 'restaurant'
 
 
+# primary_key=True,
 class RestaurantMsg(models.Model):
     restaurant_msg_id = models.IntegerField(primary_key=True)
     restaurant_id = models.IntegerField()
