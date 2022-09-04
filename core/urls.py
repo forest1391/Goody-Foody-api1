@@ -19,4 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('api/menu_review/', include('api.urls.book_review_urls')),
     path('api/auth/', include('api.urls.auth_urls')),
+    path('api/comment/', include('api.urls.comment_urls')),
 ]
