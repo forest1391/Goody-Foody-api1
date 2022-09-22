@@ -9,25 +9,6 @@ from django.shortcuts import render
 # from .forms import UploadModelForm
 
 
-# @api_view()
-# @user_login_required
-# def get_all_posts(request):
-#     menus=Menu.objects.all()
-#     # print(books)
-#     return Response({
-#         'success':True,
-#         'data': [
-#             {
-#                 'menu_id':menu.pk,
-#                 'restaurant_id':menu.restaurant_id,
-#                 'name':menu.name,
-#                 'price':menu.price,
-#                 'kcal':menu.kcal,
-#             }
-#         for menu in menus
-#         ]
-#
-#     })
 
 
 
@@ -117,27 +98,49 @@ def add_post(request):
 
 
 
+#
+# @api_view()
+# @user_login_required
+# def get_review(request, pk):
+#     try:
+#         menu=Menu.objects.get(pk=pk)
+#     except:
+#         return Response({'success':False,'message':'查無資料'},status=status.HTTP_404_NOT_FOUND)
+#
+#     # print(books)
+#     return Response({
+#         'success': True,
+#         'data': {
+#             'menu_id':menu.menu_id.pk,
+#             'restaurant_id':menu.restaurant_id,
+#             'name':menu.name,
+#             'price':menu.title,
+#             'kcal':menu.comment,
+#         }
+#
+#     })
 
 @api_view()
-@user_login_required
-def get_review(request, pk):
-    try:
-        menu=Menu.objects.get(pk=pk)
-    except:
-        return Response({'success':False,'message':'查無資料'},status=status.HTTP_404_NOT_FOUND)
+def get_a_post(request):
+    data=request.data
 
-    # print(books)
+    post_id=data.get('post_id')
+    posts = Post.objects.filter(post_id=post_id)
+    # if not posts.exists():
+    #     return Response({'success':False, 'message':'沒有此貼文'}, status=status.HTTP_404_NOT_FOUND)
     return Response({
         'success': True,
-        'data': {
-            'menu_id':menu.menu_id.pk,
-            'restaurant_id':menu.restaurant_id,
-            'name':menu.name,
-            'price':menu.title,
-            'kcal':menu.comment,
-        }
-
+        'data':[
+            {
+                    'account':post.account,
+                    'title':post.title,
+                    'content':post.content,
+                    'post_time':post.post_time,
+            }
+            for post in posts
+        ]
     })
+
 
 
 # @api_view(['POST'])
