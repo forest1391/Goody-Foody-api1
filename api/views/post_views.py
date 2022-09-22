@@ -11,7 +11,7 @@ from django.shortcuts import render
 
 @api_view()
 @user_login_required
-def get_all_reviews(request):
+def get_all_posts(request):
     menus=Menu.objects.all()
     # print(books)
     return Response({
@@ -31,25 +31,25 @@ def get_all_reviews(request):
 
 
 
-@api_view()
-# @user_login_required
-def get_all_posts(request):
-    posts=Post.objects.all()
-    # print(books)
-    return Response({
-        'success':True,
-        'data': [
-            {
-                    'post_id':post.pk,
-                    'account':post.account,
-                    'title':post.title,
-                    'content':post.content,
-                    'post_time':post.post_time,
-            }
-        for post in posts
-        ]
-
-    })
+# @api_view()
+# # @user_login_required
+# def get_all_posts(request):
+#     posts=Post.objects.all()
+#     # print(books)
+#     return Response({
+#         'success':True,
+#         'data': [
+#             {
+#                     'post_id':post.pk,
+#                     'account':post.account,
+#                     'title':post.title,
+#                     'content':post.content,
+#                     'post_time':post.post_time,
+#             }
+#         for post in posts
+#         ]
+#
+#     })
 
 @api_view(['POST'])
 def add_post(request):

@@ -32,7 +32,7 @@ def get_all_chats(request):
 def add_chat(request):
     data = request.data
     try:
-        Chat.objects.create(chat_id=data['chat_id'],account=data['account'],b_account=data['b_account'],content=data['content'],time=data['time'])
+     Chat.objects.create(chat_id=data['chat_id'],account=data['account'],b_account=data['b_account'],content=data['content'],time=data['time'])
 
     except:
         return Response({'success':False, "message":'新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
