@@ -54,7 +54,7 @@ def get_meal_eating(request):
     eat_type_id=data.get('eat_type_id')
     eatings = Eating.objects.filter(eat_type_id=eat_type_id)
     if not eatings.exists():
-        return Response({'success':False, 'message':'沒有此飲食紀錄.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'success':False, 'message':'沒有此飲食紀錄'}, status=status.HTTP_404_NOT_FOUND)
     return Response({
         'success': True,
         'data':[
