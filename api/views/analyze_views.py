@@ -59,10 +59,8 @@ def get_meal_eating(request):
         'success': True,
         'data':[
             {
-                'eat_id': eating.eat_id,
-                'account': eating.account,
+
                 'menu_id': eating.menu_id,
-                'eat_type_id': eating.eat_type_id,
                 'kcal': eating.kcal,
                 'protein': eating.protein,
                 'fat': eating.fat,
