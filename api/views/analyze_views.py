@@ -58,7 +58,7 @@ def get_meal_eating(request):
     return Response({
         'success': True,
         'data':[
-            {   
+            {
                 'menu_id': eating.menu_id,
                 'kcal': eating.kcal,
                 'protein': eating.protein,
