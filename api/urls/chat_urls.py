@@ -2,7 +2,7 @@ from django.urls import path
 
 from api.views.tag_views import *
 
-from api.views.tag_views import get_all_chats, add_tag
+from api.views.chat_views import get_all_chats
 
 app_name = 'chat'
 
