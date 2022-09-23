@@ -126,8 +126,8 @@ def get_a_post(request):
 
     post_id=data.get('post_id')
     posts = Post.objects.filter(post_id=post_id)
-    # if not posts.exists():
-    #     return Response({'success':False, 'message':'沒有此貼文'}, status=status.HTTP_404_NOT_FOUND)
+    if not posts.exists():
+        return Response({'success':False, 'message':'沒有此貼文'}, status=status.HTTP_404_NOT_FOUND)
     return Response({
         'success': True,
         'data':[
