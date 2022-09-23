@@ -6,42 +6,42 @@ from api.models import Menu
 from api.models import Post
 from utils.decorators import user_login_required
 from django.shortcuts import render
+
+
 # from .forms import UploadModelForm
-
-
-
 
 
 @api_view()
 # @user_login_required
 def get_all_posts(request):
-    posts=Post.objects.all()
+    posts = Post.objects.all()
     # print(books)
     return Response({
-        'success':True,
+        'success': True,
         'data': [
             {
-                    'post_id':post.pk,
-                    'account':post.account,
-                    'title':post.title,
-                    'content':post.content,
-                    'post_time':post.post_time,
+                'post_id': post.pk,
+                'account': post.account,
+                'title': post.title,
+                'content': post.content,
+                'post_time': post.post_time,
             }
-        for post in posts
+            for post in posts
         ]
 
     })
+
 
 @api_view(['POST'])
 def add_post(request):
     data = request.data
     try:
-        Post.objects.create(post_id=data['post_id'],title=data['title'],content=data['content'])
+        Post.objects.create(post_id=data['post_id'], title=data['title'], content=data['content'])
 
     except:
-        return Response({'success':False, "message":'新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'success': False, "message": '新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({'success':True, 'message':'新增成功'})
+    return Response({'success': True, 'message': '新增成功'})
 
 
 # @api_view(['POST'])
@@ -94,10 +94,6 @@ def add_post(request):
 #     })
 
 
-
-
-
-
 #
 # @api_view()
 # @user_login_required
@@ -122,24 +118,45 @@ def add_post(request):
 
 @api_view()
 def get_a_post(request):
-    data=request.data
+    data = request.data
 
-    post_id=data.get('post_id')
+    post_id = data.get('post_id')
     posts = Post.objects.filter(post_id=post_id)
     if not posts.exists():
-        return Response({'success':False, 'message':'沒有此貼文'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'success': False, 'message': '沒有此貼文'}, status=status.HTTP_404_NOT_FOUND)
     return Response({
         'success': True,
-        'data':[
+        'data': [
             {
-                    'account':post.account,
-                    'title':post.title,
-                    'content':post.content,
-                    'post_time':post.post_time,
+                'account': post.account,
+                'title': post.title,
+                'content': post.content,
+                'post_time': post.post_time,
             }
             for post in posts
         ]
     })
+
+@api_view()
+def get_post(request, pk):
+    try:
+        post = Post.objects.get(pk=pk)
+    except:
+        return Response({'success': False, 'message': '查無資料'}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response({
+
+        'success': True,
+        'data': {
+            'account': post.account,
+            'title': post.title,
+            'content': post.content,
+            'post_time': post.post_time,
+        }
+    })
+
+
+
 
 
 
