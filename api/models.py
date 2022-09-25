@@ -9,14 +9,23 @@ from django.db import models
 
 
 class Account(models.Model):
-    account = models.CharField(primary_key=True, max_length=50)
-    password = models.CharField(max_length=50)
+    account = models.CharField(primary_key=True, max_length=100)
+    password = models.CharField(max_length=100)
     rank = models.ForeignKey('Rank', models.DO_NOTHING)
     name = models.CharField(max_length=10)
 
     class Meta:
         managed = False
         db_table = 'account'
+
+# class AccountPhoto(models.Model):
+#     account_photo_id = models.IntegerField(primary_key=True)
+#     account = models.CharField(primary_key=True, max_length=50)
+#     photo_name = models.CharField(max_length=10)
+#
+#     class Meta:
+#         managed = False
+#         db_table = 'account_photo'
 
 
 class Chat(models.Model):
@@ -310,3 +319,6 @@ class Tags(models.Model):
     class Meta:
         managed = False
         db_table = 'tags'
+
+
+
