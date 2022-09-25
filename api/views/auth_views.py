@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from api.models import Account,Rank
+from api.models import Account
 from utils.decorators import user_login_required
 
 secret_key = 'asecretkey'
@@ -62,4 +62,5 @@ def register(request):
         return Response({'success': False,'message': '註冊失敗'},status=status.HTTP_404_NOT_FOUND)
 
     # Account.objects.get(pk=data['id'], pwd=data['pwd'])
+    return Response({'success': True, 'message': '註冊成功'})
     return Response({'success': True, 'message': '註冊成功'})

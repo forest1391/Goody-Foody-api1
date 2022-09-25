@@ -17,7 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('api/menu_review/', include('api.urls.book_review_urls')),
+    path('api/menu_review/', include('api.urls.post_urls')),
+    path('api/post/', include('api.urls.post_urls')),
+    path('api/tag/', include('api.urls.tag_urls')),
+    path('api/analyze/', include('api.urls.analyze_urls')),
+    path('api/report/', include('api.urls.report_urls')),
+    path('api/restaurant/', include('api.urls.restaurant_urls')),
     path('api/auth/', include('api.urls.auth_urls')),
-    path('api/comment/', include('api.urls.comment_urls')),
+    path('api/chat/', include('api.urls.chat_urls')),
+   
 ]
