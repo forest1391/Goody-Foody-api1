@@ -9,7 +9,7 @@ app_name = 'analyze'
 urlpatterns = [
     path('all/', get_all_eatings),
     path('add/', add_eating),
-    path('meal/', get_meal_eating),
+    path('meal/<int:type_id>/', get_meal_eating),
 
     # path('get/<int:pk>/', get_review),
     # path('get_critic_reviews/', get_critic_reviews),

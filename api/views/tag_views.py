@@ -28,7 +28,7 @@ def get_all_tags(request):
 def add_tag(request):
     data = request.data
     try:
-        Tags.objects.create(tag_id=data['tag_id'],tag_name=data['tag_name'],tag_type_id=data['tag_type_id'])
+        Tags.objects.create(tag_name=data['tag_name'],tag_type_id=data['tag_type_id'])
 
     except:
         return Response({'success':False, "message":'新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
