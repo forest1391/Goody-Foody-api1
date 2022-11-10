@@ -24,11 +24,11 @@ def add_review(request):
 @user_login_required
 def delete_review(request):
     data = request.data
-# <test>
+    # <test>
     restaurant_msg_id = data.get('restaurant_msg_id')
-# <test>
+    # <test>
     account = data.get('account')
-    restaurant_msg = RestaurantMsg.objects.filter(restaurant_msg_id=restaurant_msg_id,account=account)
+    restaurant_msg = RestaurantMsg.objects.filter(restaurant_msg_id=restaurant_msg_id, account=account)
     if not restaurant_msg.exists():
         return Response({'success': False, 'message': '沒有此留言'}, status=status.HTTP_404_NOT_FOUND)
     restaurant_msg.delete()
@@ -46,11 +46,11 @@ def all_review(request):
         'success': True,
         'data': [
             {
-            'restaurant_msg_id':restaurant_msg.restaurant_msg_id,
-            'restaurant_id':restaurant_msg.restaurant_id,
-            'account':restaurant_msg.account,
-            'content':restaurant_msg.content,	   
-            'time':restaurant_msg.time,
+                'restaurant_msg_id': restaurant_msg.restaurant_msg_id,
+                'restaurant_id': restaurant_msg.restaurant_id,
+                'account': restaurant_msg.account,
+                'content': restaurant_msg.content,
+                'time': restaurant_msg.time,
             }
             for restaurant_msg in restaurant_msgs
         ]
@@ -62,9 +62,9 @@ def get_comment_reviews(request):
     # 注意：因使用GET，使用query_params
     data = request.query_params
     account = data.get('account')
-    
+
     # 去除前後空白
-    account= str(account).strip()
+    account = str(account).strip()
 
 # 編輯留言
 

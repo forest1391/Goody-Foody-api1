@@ -6,17 +6,31 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.utils import timezone
+
+# class Photo(models.Model):
+#     image = models.ImageField(upload_to='image/', blank=False, null=False)
+#     upload_date = models.DataField(default=timezone.now())
 
 
 class Account(models.Model):
-    account = models.CharField(primary_key=True, max_length=50)
-    password = models.CharField(max_length=50)
+    account = models.CharField(primary_key=True, max_length=100)
+    password = models.CharField(max_length=100)
     rank = models.ForeignKey('Rank', models.DO_NOTHING)
     name = models.CharField(max_length=10)
 
     class Meta:
         managed = False
         db_table = 'account'
+
+# class AccountPhoto(models.Model):
+#     account_photo_id = models.IntegerField(primary_key=True)
+#     account = models.CharField(primary_key=True, max_length=50)
+#     photo_name = models.CharField(max_length=10)
+#
+#     class Meta:
+#         managed = False
+#         db_table = 'account_photo'
 
 
 class Chat(models.Model):
@@ -69,6 +83,12 @@ class Eating(models.Model):
     menu_id = models.IntegerField()
     eat_type_id = models.IntegerField()
     date = models.DateField()
+    kcal = models.IntegerField()
+    carbohydrate = models.FloatField(blank=True, null=True)
+    protein = models.FloatField(blank=True, null=True)
+    fat = models.FloatField(blank=True, null=True)
+    sodium = models.FloatField(blank=True, null=True)
+    dietary_fiber = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -250,7 +270,6 @@ class Restaurant(models.Model):
         db_table = 'restaurant'
 
 
-# primary_key=True,
 class RestaurantMsg(models.Model):
     restaurant_msg_id = models.IntegerField(primary_key=True)
     restaurant_id = models.IntegerField()
@@ -310,3 +329,6 @@ class Tags(models.Model):
     class Meta:
         managed = False
         db_table = 'tags'
+
+
+
