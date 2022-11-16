@@ -13,7 +13,7 @@ import datetime
 def add_review(request):
     data = request.data
     try:
-        RestaurantMsg.objects.create(restaurant_msg_id=data['restaurant_msg_id'],account=data['account'], restaurant_id =data['restaurant_id '],content=data['content'],time=datetime.datetime.now())
+        RestaurantMsg.objects.create(account=data['account'], restaurant_id =data['restaurant_id '],content=data['content'],time=datetime.datetime.now())
     except:
         return Response({'success': False, 'message': '新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -41,7 +41,7 @@ def all_review(request):
     data = request.query_params
     account = data.get('account')
     account = str(account).strip()
-    restaurant_msgs = RestaurantMsg.objects.all().order_by('restaurant_msg_id')
+    restaurant_msgs = RestaurantMsg.objects.all().order_by('-restaurant_msg_id')
     return Response({
         'success': True,
         'data': [

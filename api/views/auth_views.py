@@ -64,4 +64,4 @@ def register(request):
     # Account.objects.get(pk=data['id'], pwd=data['pwd'])
     return Response({'success': True, 'message': '註冊成功'})
 
-    return Response({'success': True, 'message': '註冊成功'})
+    # return Response({'success': True, 'message': '註冊成功'})
