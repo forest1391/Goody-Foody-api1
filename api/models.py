@@ -271,7 +271,7 @@ class Restaurant(models.Model):
 
 
 class RestaurantMsg(models.Model):
-    restaurant_msg_id = models.IntegerField(primary_key=True)
+    restaurant_msg_id = models.AutoField(primary_key=True)
     restaurant_id = models.IntegerField()
     account = models.CharField(max_length=50)
     content = models.TextField(blank=True, null=True)
