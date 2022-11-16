@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from api.models import Report
+from api.models import Report,Account
 from api.models import Post
 
 from utils.decorators import user_login_required
@@ -17,7 +17,7 @@ def get_all_reports(request):
         'data': [
             {
                 'report_id':report.report_id,
-                'account': report.account,
+                'account': report.account.pk,
                 'title': report.title,
                 'content': report.content,
                 'report_type_id': report.report_type_id,
@@ -29,13 +29,16 @@ def get_all_reports(request):
 
     })
 
-# @api_view(['POST'])
-# def add_tag(request):
-#     data = request.data
-#     try:
-#         Post.objects.create(tag_id=data['tag_id'],tag_name=data['tag_name'],tag_type_id=data['tag_type_id'])
-#
-#     except:
-#         return Response({'success':False, "message":'新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
-#
-#     return Response({'success':True, 'message':'新增成功'})
+
+@api_view(['POST'])
+def add_report(request):
+    data = request.data
+    # try:
+    account = Account.objects.get(pk=data['account'])
+    Report.objects.create(account=account, title=data['title'], content=data['content'], time=data['time'])
+
+    # except:
+    #     return Response({'success': False, "message": '新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
+    #
+    # return Response({'success': True, 'message': '新增成功'})
+

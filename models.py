@@ -5,16 +5,14 @@
 #   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
-
 from django.db import models
-from django.core.serializers import serialize
 
 
 class Account(models.Model):
-    account = models.CharField(primary_key=True, max_length=100)
-    password = models.CharField(max_length=100)
+    account = models.CharField(primary_key=True, max_length=-1)
+    password = models.CharField(max_length=-1)
     rank = models.ForeignKey('Rank', models.DO_NOTHING)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -24,7 +22,7 @@ class Account(models.Model):
 class AccountPhoto(models.Model):
     account_photo_id = models.AutoField(primary_key=True)
     account = models.ForeignKey(Account, models.DO_NOTHING, db_column='account')
-    photo_name = models.CharField(max_length=200, blank=True, null=True)
+    photo_name = models.CharField(max_length=-1, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -102,9 +100,8 @@ class AuthUserUserPermissions(models.Model):
 
 class Chat(models.Model):
     chat_id = models.AutoField(primary_key=True)
-        # , db_column='account'
     account = models.ForeignKey(Account, models.DO_NOTHING)
-    b_account = models.CharField(max_length=100)
+    b_account = models.CharField(max_length=-1)
     content = models.TextField()
     time = models.TimeField()
 
@@ -115,9 +112,9 @@ class Chat(models.Model):
 
 class ChatPhoto(models.Model):
     chat_photo_id = models.AutoField(primary_key=True)
-    account = models.CharField(max_length=100)
+    account = models.CharField(max_length=-1)
     b_account = models.IntegerField()
-    photo_subname = models.CharField(max_length=100)
+    photo_subname = models.CharField(max_length=-1)
     time = models.TimeField()
 
     class Meta:
@@ -126,9 +123,9 @@ class ChatPhoto(models.Model):
 
 
 class Dietitian(models.Model):
-    account = models.CharField(primary_key=True, max_length=100)
-    real_name = models.CharField(max_length=100)
-    license_id = models.CharField(max_length=100)
+    account = models.CharField(primary_key=True, max_length=-1)
+    real_name = models.CharField(max_length=-1)
+    license_id = models.CharField(max_length=-1)
     resume = models.TextField(blank=True, null=True)
 
     class Meta:
@@ -183,7 +180,7 @@ class DjangoSession(models.Model):
 
 class EatType(models.Model):
     eat_type_id = models.IntegerField(primary_key=True)
-    eat_type = models.CharField(max_length=100)
+    eat_type = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -211,7 +208,7 @@ class Eating(models.Model):
 class Menu(models.Model):
     menu_id = models.AutoField(primary_key=True)
     restaurant_id = models.IntegerField()
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=-1)
     price = models.IntegerField()
     kcal = models.IntegerField(blank=True, null=True)
     carbohydrate = models.FloatField(blank=True, null=True)
@@ -219,9 +216,9 @@ class Menu(models.Model):
     fat = models.FloatField(blank=True, null=True)
     sodium = models.FloatField(blank=True, null=True)
     dietary_fiber = models.FloatField(blank=True, null=True)
-    edit_dietitian_id = models.CharField(max_length=100, blank=True, null=True)
-    last_rank = models.CharField(max_length=100, blank=True, null=True)
-    subname = models.CharField(max_length=100, blank=True, null=True)
+    edit_dietitian_id = models.CharField(max_length=-1, blank=True, null=True)
+    last_rank = models.CharField(max_length=-1, blank=True, null=True)
+    subname = models.CharField(max_length=-1, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -240,7 +237,7 @@ class MenuTag(models.Model):
 
 class MenuThumbs(models.Model):
     menu_id = models.IntegerField(primary_key=True)
-    account = models.CharField(max_length=100)
+    account = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -248,19 +245,19 @@ class MenuThumbs(models.Model):
         unique_together = (('menu_id', 'account'),)
 
 
-# class Newtable(models.Model):
-#     test = models.AutoField()
-#     test1 = models.CharField(max_length=-1)
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'newtable'
+class Newtable(models.Model):
+    test = models.AutoField()
+    test1 = models.CharField(max_length=-1)
+
+    class Meta:
+        managed = False
+        db_table = 'newtable'
 
 
 class Post(models.Model):
     post_id = models.AutoField(primary_key=True)
     account = models.ForeignKey(Account, models.DO_NOTHING, db_column='account')
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=-1)
     content = models.TextField(blank=True, null=True)
     post_time = models.DateField(blank=True, null=True)
 
@@ -282,7 +279,7 @@ class PostMsg(models.Model):
 
 
 class PostMsgThumbs(models.Model):
-    account = models.CharField(primary_key=True, max_length=100)
+    account = models.CharField(primary_key=True, max_length=-1)
     post_msg_id = models.IntegerField()
 
     class Meta:
@@ -294,7 +291,7 @@ class PostMsgThumbs(models.Model):
 class PostPhoto(models.Model):
     post_photo_id = models.IntegerField(primary_key=True)
     post_id = models.IntegerField()
-    photo_name = models.CharField(max_length=200, blank=True, null=True)
+    photo_name = models.CharField(max_length=-1, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -313,7 +310,7 @@ class PostTag(models.Model):
 
 class PostThumbs(models.Model):
     post_id = models.IntegerField(primary_key=True)
-    account = models.CharField(max_length=100)
+    account = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -323,7 +320,7 @@ class PostThumbs(models.Model):
 
 class Rank(models.Model):
     rank_id = models.IntegerField(primary_key=True)
-    rank_name = models.CharField(max_length=100)
+    rank_name = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -333,11 +330,11 @@ class Rank(models.Model):
 class Report(models.Model):
     report_id = models.AutoField(primary_key=True)
     account = models.ForeignKey(Account, models.DO_NOTHING, db_column='account')
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=-1)
     content = models.TextField()
     time = models.DateField()
     report_type_id = models.IntegerField(blank=True, null=True)
-    object_id = models.CharField(max_length=100, blank=True, null=True)
+    object_id = models.CharField(max_length=-1, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -347,7 +344,7 @@ class Report(models.Model):
 class ReportMsg(models.Model):
     report_msg_id = models.IntegerField(primary_key=True)
     report_id = models.IntegerField()
-    account = models.CharField(max_length=100)
+    account = models.CharField(max_length=-1)
     content = models.TextField()
     time = models.DateField()
 
@@ -359,7 +356,7 @@ class ReportMsg(models.Model):
 class ReportPhoto(models.Model):
     report_photo_id = models.IntegerField(primary_key=True)
     report_id = models.IntegerField()
-    photo_name = models.CharField(max_length=100)
+    photo_name = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -368,7 +365,7 @@ class ReportPhoto(models.Model):
 
 class ReportType(models.Model):
     report_type_id = models.IntegerField(primary_key=True)
-    report_type = models.CharField(max_length=100)
+    report_type = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -377,15 +374,15 @@ class ReportType(models.Model):
 
 class Restaurant(models.Model):
     restaurant_id = models.AutoField(primary_key=True)
-    account = models.ForeignKey(Account, models.DO_NOTHING, db_column='account')
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100, blank=True, null=True)
+    account = models.CharField(max_length=-1)
+    name = models.CharField(max_length=-1)
+    address = models.CharField(max_length=-1)
+    phone = models.CharField(max_length=-1, blank=True, null=True)
     business_hours = models.TextField(blank=True, null=True)
     resume = models.TextField(blank=True, null=True)
-    license_id = models.CharField(max_length=100, blank=True, null=True)
-    lat = models.FloatField(max_length=100, blank=True, null=True)
-    lon = models.FloatField(max_length=100, blank=True, null=True)
+    license_id = models.CharField(max_length=-1, blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -394,10 +391,10 @@ class Restaurant(models.Model):
 
 class RestaurantMsg(models.Model):
     restaurant_msg_id = models.AutoField(primary_key=True)
-    restaurant_id = models.IntegerField()
-    account = models.CharField(max_length=100)
-    content = models.TextField(blank=True, null=True)
-    time = models.DateField(blank=True, null=True)
+    restaurant = models.ForeignKey(Restaurant, models.DO_NOTHING)
+    account = models.CharField(max_length=-1)
+    content = models.TextField()
+    time = models.DateField()
 
     class Meta:
         managed = False
@@ -406,7 +403,7 @@ class RestaurantMsg(models.Model):
 
 class RestaurantMsgThumbs(models.Model):
     restaurant_msg_id = models.IntegerField(primary_key=True)
-    account = models.CharField(max_length=100)
+    account = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -417,8 +414,7 @@ class RestaurantMsgThumbs(models.Model):
 class RestaurantPhoto(models.Model):
     restaurant_photo_id = models.IntegerField(primary_key=True)
     restaurant_id = models.IntegerField()
-    photo_name = models.CharField(max_length=100)
-    restaurant_image = models.ImageField(null=True, blank=True, upload_to="images/")
+    photo_name = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -437,7 +433,7 @@ class RestaurantTag(models.Model):
 
 class TagType(models.Model):
     tag_type_id = models.IntegerField(primary_key=True)
-    tag_type = models.CharField(max_length=100)
+    tag_type = models.CharField(max_length=-1)
 
     class Meta:
         managed = False
@@ -446,7 +442,7 @@ class TagType(models.Model):
 
 class Tags(models.Model):
     tag_id = models.AutoField(primary_key=True)
-    tag_name = models.CharField(max_length=100)
+    tag_name = models.CharField(max_length=-1)
     tag_type_id = models.IntegerField(blank=True, null=True)
 
     class Meta:

@@ -39,7 +39,7 @@ def get_all_posts(request):
         'data': [
             {
                     'post_id':post.pk,
-                    'account':post.account,
+                    'account':post.account.pk,
                     'title':post.title,
                     'content':post.content,
                     'post_time':post.post_time,

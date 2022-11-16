@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from api.models import Menu
-from api.models import Post
+from api.models import Post,Account
 from utils.decorators import user_login_required
 from django.shortcuts import render
 
@@ -20,8 +20,8 @@ def get_all_posts(request):
         'success': True,
         'data': [
             {
-                'post_id': post.pk,
-                'account': post.account,
+                'post_id':post.post_id,
+                'account': post.account.pk,
                 'title': post.title,
                 'content': post.content,
                 'post_time': post.post_time,
@@ -36,7 +36,8 @@ def get_all_posts(request):
 def add_post(request):
     data = request.data
     try:
-        Post.objects.create(post_id=data['post_id'], title=data['title'], content=data['content'])
+        account=Account.objects.get(pk=data['account'])
+        Post.objects.create(account=account,title=data['title'], content=data['content'])
 
     except:
         return Response({'success': False, "message": '新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
@@ -44,101 +45,33 @@ def add_post(request):
     return Response({'success': True, 'message': '新增成功'})
 
 
-# @api_view(['POST'])
-# def index(request):
-#     form = UploadModelForm()
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'photos/index.html', context)
-#
 
 
 # @api_view()
-# @user_login_required
-# def get_all_posts(request, post=None):
-#     posts=Post.objects.all()
+# def get_a_post(request):
+#     data = request.data
 #
-#     return Response({
-#         'success':True,
-#         'data': [
-#             {
-#                 'post_id':post.pk,
-#                 'account':post.account,
-#                 'title':post.title,
-#                 'content':post.content,
-#                 'post_time':post.post_time,
-#     }
-#         ]
-#
-#     })
-
-# @api_view()
-# def get_all_reviews(request):
-#     menu_tag=Menu.objects.all()
-#     # print(books)
-#     return Response({
-#         'success':True,
-#         'data': [
-#             {
-#                 'menu_id': menus.user.pk,
-#                 'restaurant_id': menu_tag.user.pk,
-#
-#
-#
-#
-#             }
-#         for menus in Menu
-#         ]
-#
-#     })
-
-
-#
-# @api_view()
-# @user_login_required
-# def get_review(request, pk):
-#     try:
-#         menu=Menu.objects.get(pk=pk)
-#     except:
-#         return Response({'success':False,'message':'查無資料'},status=status.HTTP_404_NOT_FOUND)
-#
-#     # print(books)
+#     post_id = data.get('post_id')
+#     posts = Post.objects.filter(post_id=post_id)
+#     if not posts.exists():
+#         return Response({'success': False, 'message': '沒有此貼文'}, status=status.HTTP_404_NOT_FOUND)
 #     return Response({
 #         'success': True,
-#         'data': {
-#             'menu_id':menu.menu_id.pk,
-#             'restaurant_id':menu.restaurant_id,
-#             'name':menu.name,
-#             'price':menu.title,
-#             'kcal':menu.comment,
-#         }
-#
+#         'data': [
+#             {
+#                 'account': post.account,
+#                 'title': post.title,
+#                 'content': post.content,
+#                 'post_time': post.post_time,
+#             }
+#             for post in posts
+#         ]
 #     })
 
 @api_view()
-def get_a_post(request):
-    data = request.data
-
-    post_id = data.get('post_id')
-    posts = Post.objects.filter(post_id=post_id)
-    if not posts.exists():
-        return Response({'success': False, 'message': '沒有此貼文'}, status=status.HTTP_404_NOT_FOUND)
-    return Response({
-        'success': True,
-        'data': [
-            {
-                'account': post.account,
-                'title': post.title,
-                'content': post.content,
-                'post_time': post.post_time,
-            }
-            for post in posts
-        ]
-    })
-
-@api_view()
-def get_post(request, pk):
+def get_post(request,pk):
+    # data = request.query_params
+    # pk = data.get('post_id')
     try:
         post = Post.objects.get(pk=pk)
     except:
@@ -148,7 +81,8 @@ def get_post(request, pk):
 
         'success': True,
         'data': {
-            'account': post.account,
+            'post_id':post.post_id,
+            'account': post.account.pk,
             'title': post.title,
             'content': post.content,
             'post_time': post.post_time,
