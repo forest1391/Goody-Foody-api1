@@ -1,18 +1,19 @@
+from ipaddress import ip_address
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from api.models import RestaurantMsg
 from utils.decorators import user_login_required
+import datetime
 
 
 @api_view(['POST'])
-# @user_login_required
+@user_login_required
 def add_review(request):
     data = request.data
     try:
-        RestaurantMsg.objects.create(restaurant_msg_id=data['restaurant_msg_id'], account=data['account'],
-                                     restaurant_id=data['restaurant_id '], content=data['content'], time=data['time'])
+        RestaurantMsg.objects.create(account=data['account'], restaurant_id =data['restaurant_id '],content=data['content'],time=datetime.datetime.now())
     except:
         return Response({'success': False, 'message': '新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -35,14 +36,12 @@ def delete_review(request):
 
 
 @api_view()
-# @user_login_required
+@user_login_required
 def all_review(request):
     data = request.query_params
     account = data.get('account')
-
     account = str(account).strip()
-    restaurant_msgs = RestaurantMsg.objects.all()
-
+    restaurant_msgs = RestaurantMsg.objects.all().order_by('-restaurant_msg_id')
     return Response({
         'success': True,
         'data': [
@@ -54,28 +53,6 @@ def all_review(request):
                 'time': restaurant_msg.time,
             }
             for restaurant_msg in restaurant_msgs
-        ]
-    })
-
-
-@api_view()
-def get_restaurant_comment(request):
-    data = request.data
-
-    restaurant_id = data.get('restaurant_id')
-    restaurants = RestaurantMsg.objects.filter(restaurant_id=restaurant_id)
-    if not restaurants.exists():
-        return Response({'success': False, 'message': '此餐廳沒有留言'}, status=status.HTTP_404_NOT_FOUND)
-    return Response({
-        'success': True,
-        'data': [
-            {
-
-                'account': restaurant.account,
-                'content': restaurant.content,
-                'time': restaurant.time,
-            }
-            for restaurant in restaurants
         ]
     })
 
@@ -106,3 +83,4 @@ def get_comment_reviews(request):
 #         return Response({'success': True, 'message': '編輯成功'})
 #     except:
 #         return Response({'success': False, 'message': '編輯失敗'}, status=status.HTTP_400_BAD_REQUEST)
+
