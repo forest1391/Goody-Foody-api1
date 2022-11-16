@@ -418,6 +418,7 @@ class RestaurantPhoto(models.Model):
     restaurant_photo_id = models.IntegerField(primary_key=True)
     restaurant_id = models.IntegerField()
     photo_name = models.CharField(max_length=100)
+    restaurant_image = models.ImageField(null=True, blank=True, upload_to="images/")
 
     class Meta:
         managed = False

@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from api.models import Eating, Account
+from api.models import Eating, Account,Menu
 
 from utils.decorators import user_login_required
 
@@ -36,8 +36,9 @@ def get_all_eatings(request):
 def add_eating(request):
     data = request.data
     # try:
-    # account = Account.objects.get(pk=data['account'])
-    Eating.objects.create(account=data['account'],menu_id=data['menu_id'],eat_type_id=data['eat_type_id']
+
+    account = Account.objects.get(pk=data['account'])
+    Eating.objects.create(account=account,menu_id=data['menu_id'],eat_type_id=data['eat_type_id']
                            ,date=data['date'],kcal=data['kcal'],carbohydrate=data['carbohydrate'],protein=data['protein'],sodium=data['sodium']
                            ,fat=data['fat'])
     #
@@ -67,6 +68,27 @@ def get_meal_eating(request, type_id):
             }
             for eating in eatings
         ]
+    })
+
+@api_view()
+def add_menu_item(request,pk):
+    # data = request.query_params
+    # pk = data.get('post_id')
+    # try:
+    menu = Menu.objects.get(pk=pk)
+    # except:
+    #     return Response({'success': False, 'message': '查無資料'}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response({
+
+        'success': True,
+        'data': {
+            'kcal':menu.kcal,
+            'carbohydrate': menu.carbohydrate,
+            'protein': menu.protein,
+            'fat': menu.fat,
+
+        }
     })
 
 # objects.filter(..).orderby('-')

@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from api.models import Report
+from api.models import Report,Account
 from api.models import Post
 
 from utils.decorators import user_login_required
@@ -34,7 +34,8 @@ def get_all_reports(request):
 def add_report(request):
     data = request.data
     # try:
-    Report.objects.create(account=data['account'], title=data['title'], content=data['content'], time=data['time'])
+    account = Account.objects.get(pk=data['account'])
+    Report.objects.create(account=account, title=data['title'], content=data['content'], time=data['time'])
 
     # except:
     #     return Response({'success': False, "message": '新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
