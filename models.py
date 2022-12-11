@@ -205,6 +205,23 @@ class Eating(models.Model):
         db_table = 'eating'
 
 
+class LocView(models.Model):
+    restaurant_id = models.IntegerField(blank=True, null=True)
+    account = models.CharField(max_length=-1, blank=True, null=True)
+    name = models.CharField(max_length=-1, blank=True, null=True)
+    address = models.CharField(max_length=-1, blank=True, null=True)
+    phone = models.CharField(max_length=-1, blank=True, null=True)
+    business_hours = models.TextField(blank=True, null=True)
+    resume = models.TextField(blank=True, null=True)
+    license_id = models.CharField(max_length=-1, blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'loc_view'
+
+
 class Menu(models.Model):
     menu_id = models.AutoField(primary_key=True)
     restaurant_id = models.IntegerField()
@@ -252,6 +269,36 @@ class Newtable(models.Model):
     class Meta:
         managed = False
         db_table = 'newtable'
+
+
+class PgStatStatements(models.Model):
+    userid = models.TextField(blank=True, null=True)  # This field type is a guess.
+    dbid = models.TextField(blank=True, null=True)  # This field type is a guess.
+    queryid = models.BigIntegerField(blank=True, null=True)
+    query = models.TextField(blank=True, null=True)
+    calls = models.BigIntegerField(blank=True, null=True)
+    total_time = models.FloatField(blank=True, null=True)
+    min_time = models.FloatField(blank=True, null=True)
+    max_time = models.FloatField(blank=True, null=True)
+    mean_time = models.FloatField(blank=True, null=True)
+    stddev_time = models.FloatField(blank=True, null=True)
+    rows = models.BigIntegerField(blank=True, null=True)
+    shared_blks_hit = models.BigIntegerField(blank=True, null=True)
+    shared_blks_read = models.BigIntegerField(blank=True, null=True)
+    shared_blks_dirtied = models.BigIntegerField(blank=True, null=True)
+    shared_blks_written = models.BigIntegerField(blank=True, null=True)
+    local_blks_hit = models.BigIntegerField(blank=True, null=True)
+    local_blks_read = models.BigIntegerField(blank=True, null=True)
+    local_blks_dirtied = models.BigIntegerField(blank=True, null=True)
+    local_blks_written = models.BigIntegerField(blank=True, null=True)
+    temp_blks_read = models.BigIntegerField(blank=True, null=True)
+    temp_blks_written = models.BigIntegerField(blank=True, null=True)
+    blk_read_time = models.FloatField(blank=True, null=True)
+    blk_write_time = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'pg_stat_statements'
 
 
 class Post(models.Model):
@@ -390,11 +437,11 @@ class Restaurant(models.Model):
 
 
 class RestaurantMsg(models.Model):
-    restaurant_msg_id = models.AutoField(primary_key=True)
     restaurant = models.ForeignKey(Restaurant, models.DO_NOTHING)
     account = models.CharField(max_length=-1)
     content = models.TextField()
     time = models.DateField()
+    restaurant_msg_id = models.BigAutoField(primary_key=True)
 
     class Meta:
         managed = False
