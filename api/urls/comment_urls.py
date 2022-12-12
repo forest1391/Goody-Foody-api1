@@ -2,7 +2,6 @@ from django.urls import path
 
 from api.views.comment_views import *
 
-# from api.views.comment_views import add_review,delete_review,get_comment_reviews,all_review,edit_review
 
 app_name = 'comment_test'
 
