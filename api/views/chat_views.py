@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -42,9 +44,11 @@ def add_chat(request):
 def chat_and_add(request):
     data = request.data
     chats = Chat.objects.all()
+    now = datetime.now()
+    hms = now.strftime("%H:%M:%S")
     try:
         account = Account.objects.get(pk=data['account'])
-        Chat.objects.create(account=account, b_account=data['b_account'], content=data['content'], time=data['time'])
+        Chat.objects.create(account=account, b_account=data['b_account'], content=data['content'], time=hms)
 
     except:
         return Response({'success': False, "message": '新增失敗'}, status=status.HTTP_400_BAD_REQUEST)

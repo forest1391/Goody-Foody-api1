@@ -50,13 +50,13 @@ def get_restaurant_menu(request, get_restaurant_id):
                 'menu_id': menu.menu_id,
                 'restaurant_id': menu.restaurant_id,
                 'name': menu.name,
-                'price': menu.price,
-                'kcal': menu.kcal,
-                'carbohydrate': menu.carbohydrate,
-                'protein': menu.protein,
-                'fat': menu.fat,
-                'sodium':menu.sodium,
-                'subname':menu.subname
+                'price': menu.price if menu.price is not None else "尚未填寫",
+                'kcal': menu.kcal if menu.kcal is not None else "尚未填寫",
+                'carbohydrate': menu.carbohydrate if menu.carbohydrate is not None else "尚未填寫",
+                'protein': menu.protein if menu.protein is not None else "尚未填寫",
+                'fat': menu.fat if menu.fat is not None else "尚未填寫",
+                'sodium':menu.sodium if menu.sodium is not None else "尚未填寫",
+                'subname':menu.subname if menu.subname is not None else "尚未填寫"
             }
             for menu in restaurant_menus
         ]

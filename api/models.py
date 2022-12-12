@@ -263,6 +263,8 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True, null=True)
     post_time = models.DateField(blank=True, null=True)
+    post_photo = models.CharField(max_length=100, blank=True, null=True)
+    tag = models.ForeignKey('Tags', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -386,6 +388,7 @@ class Restaurant(models.Model):
     license_id = models.CharField(max_length=100, blank=True, null=True)
     lat = models.FloatField(max_length=100, blank=True, null=True)
     lon = models.FloatField(max_length=100, blank=True, null=True)
+    tag = models.ForeignKey('Tags', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -452,3 +455,19 @@ class Tags(models.Model):
     class Meta:
         managed = False
         db_table = 'tags'
+
+class LocView(models.Model):
+    restaurant_id = models.IntegerField(blank=True, null=True)
+    account = models.CharField(max_length=100, blank=True, null=False, primary_key=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(max_length=100, blank=True, null=True)
+    business_hours = models.TextField(blank=True, null=True)
+    resume = models.TextField(blank=True, null=True)
+    license_id = models.CharField(max_length=100, blank=True, null=True)
+    lat = models.FloatField(blank=True, null=True)
+    lon = models.FloatField(blank=True, null=True)
+
+    class Meta:
+        managed = False  # Created from a view. Don't remove.
+        db_table = 'loc_view'
