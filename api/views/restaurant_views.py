@@ -1,3 +1,5 @@
+from tkinter import Entry
+
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -91,4 +93,39 @@ def add_information(request):
     #     return Response({'success': False, "message": '新增失敗'}, status=status.HTTP_400_BAD_REQUEST)
     #
     # return Response({'success': True, 'message': '新增成功'})
+
+
+@api_view()
+def search_restaurant(request):
+    data = request.query_params
+    search = data['search']
+    # try:
+    restaurants = Restaurant.objects.filter(name__contains=search)
+    # except:
+    #     return Response({'success': False, 'message': '查無資料'}, status=status.HTTP_404_NOT_FOUND)
+
+    return Response({
+
+        'success': True,
+        'data': [
+            {
+                'restaurant_id': restaurant.restaurant_id,
+                # 'account': restaurant.account,
+                'name': restaurant.name,
+                'address': restaurant.address,
+                'phone': restaurant.phone,
+                'business_hours': restaurant.business_hours,
+                'resume': restaurant.resume,
+                'license_id': restaurant.license_id,
+                'lat': restaurant.lat,
+                'lon': restaurant.lon,
+            }
+            for restaurant in restaurants
+        ]
+    })
+
+
+
+
+
 

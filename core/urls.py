@@ -18,7 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('api/menu_review/', include('api.urls.book_review_urls')),
-    path('api/menu_review/', include('api.urls.post_urls')),
+    # path('api/menu_review/', include('api.urls.post_urls')),
     path('api/menu/', include('api.urls.menu_urls')),
     path('api/post/', include('api.urls.post_urls')),
     path('api/tag/', include('api.urls.tag_urls')),
@@ -28,5 +28,6 @@ urlpatterns = [
     path('api/auth/', include('api.urls.auth_urls')),
     path('api/comment/', include('api.urls.comment_urls')),
     path('api/chat/', include('api.urls.chat_urls')),
+    path('api/map/', include('api.urls.map_urls')),
    
 ]

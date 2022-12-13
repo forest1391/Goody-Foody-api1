@@ -9,5 +9,6 @@ urlpatterns = [
     path('all/', all_review),
     path('add/', add_review),
     path('delete/', delete_review),
+    # path('detail/', get_restaurant_comment),
     # path('edit/',edit_review),
 ]

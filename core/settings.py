@@ -81,7 +81,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse('postgres://hwiwylqsylpbhz:d0342addb9c702380c94d61cc4fa4883d682437f53ee8e8a05a0cc85c2d49fa4@ec2-3-219-63-251.compute-1.amazonaws.com:5432/d5kql1ob5u61cu')
+    'default': dj_database_url.parse('postgres://jmlhlomr:goJCS2yy4TQjFaQeRvd6igF00cBNq26W@arjuna.db.elephantsql.com/jmlhlomr')
+    # 'default': dj_database_url.parse('postgres://hwiwylqsylpbhz:d0342addb9c702380c94d61cc4fa4883d682437f53ee8e8a05a0cc85c2d49fa4@ec2-3-219-63-251.compute-1.amazonaws.com:5432/d5kql1ob5u61cu')
 }
 
 
@@ -107,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hant'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
